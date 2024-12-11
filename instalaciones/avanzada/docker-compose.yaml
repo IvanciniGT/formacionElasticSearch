@@ -1,0 +1,293 @@
+version: "2.2"
+
+services:
+
+  setup:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+    user: "0"
+    command: >
+      bash -c '
+        if [ x${ELASTIC_PASSWORD} == x ]; then
+          echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
+          exit 1;
+        elif [ x${KIBANA_PASSWORD} == x ]; then
+          echo "Set the KIBANA_PASSWORD environment variable in the .env file";
+          exit 1;
+        fi;
+        if [ ! -f config/certs/ca.zip ]; then
+          echo "Creating CA";
+          bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
+          unzip config/certs/ca.zip -d config/certs;
+        fi;
+        if [ ! -f config/certs/certs.zip ]; then
+          echo "Creating certs";
+          echo -ne \
+          "instances:\n"\
+          "  - name: maestro1\n"\
+          "    dns:\n"\
+          "      - maestro1\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: maestro2\n"\
+          "    dns:\n"\
+          "      - maestro2\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: datos1\n"\
+          "    dns:\n"\
+          "      - datos1\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: datos2\n"\
+          "    dns:\n"\
+          "      - datos2\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: datos3\n"\
+          "    dns:\n"\
+          "      - datos3\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: coordinador1\n"\
+          "    dns:\n"\
+          "      - coordinador1\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: coordinador2\n"\
+          "    dns:\n"\
+          "      - coordinador2\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          > config/certs/instances.yml;
+          bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
+          unzip config/certs/certs.zip -d config/certs;
+        fi;
+        echo "Setting file permissions"
+        chown -R root:root config/certs;
+        find . -type d -exec chmod 750 \{\} \;;
+        find . -type f -exec chmod 640 \{\} \;;
+        echo "Waiting for Elasticsearch availability";
+        until curl -s --cacert config/certs/ca/ca.crt https://maestro1:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+        echo "Setting kibana_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://maestro1:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        echo "All done!";
+      '
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/maestro1/maestro1.crt ]"]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
+  maestro1: # FQDN del contenedor dado de alta en el DNS interno de Docker.
+        # Desde un contenedor que esté conectado a la misma red que éste, puedo comunicarme con él usando el nombre de red: maestro1
+        # Een lugar de su dirección IP.
+    container_name: maestro1 # El nombre del contenedor, que me sirve para gestionar el contenedor con Docker.
+                         # docker container start maestro1
+                         # docker container stop maestro1
+                         # docker logs maestro1
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - ${ES_PORT}:9200
+    environment:
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
+      - node.name=maestro1                                # Es un nombre que identifica a este nodo dentro del cluster de ES.
+                                                          # Ésto es interno de ElasticSearch, no tiene nada que ver con el nombre del contenedor.
+                                                          # Ni con el nombre del host... ni el nombre de red.
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.seed_hosts=maestro2                     # Los nodos con los que tienes que conectar al arrancar para formar cluster
+                                                          # Aquí ponemos FQDN, o IPS. Esto no tiene nada que ver con los nombres definidos en node.name
+                                                          # En nuestro caso, los nombres de los servicios.
+      - cluster.initial_master_nodes=maestro1,maestro2    # Los nodos que serían elegidos maestros al arrancar (ORDEN)
+                                                          # Estos nombres.. son los del node.name.
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}              # Contraseña de usuario elastic
+      - bootstrap.memory_lock=true                        # Para que ES bloquee la memoria en RAM
+
+      # En este ejemplo, no hay nada de tipos de nodos.
+
+#      - node.roles=[]                                     # Le pongo que no tiene ningún rol especial. NODO COORDINADOR
+      - node.roles=[master]                               # NODO MAESTRO
+#      - node.roles=[data, master, voting_only]            # NODO DE DATOS, que puede votar al elegir maestro, pero no puede ser maestro.
+#      - node.roles=[data_content]                         # Es un data de un tipo muy concreto: data_content. 
+                                                          # Otros tipos de data: data_hot, data_warm, data_cold, data_frozen
+#      - node.roles=[ingest]                               # NODO DE INGESTIÓN
+#      - node.roles=[remote_cluster_client]                # NODO CLIENTE DE CLUSTER REMOTO
+#      - node.roles=[ml]                                   # NODO DE MACHINE LEARNING
+      # Que" no haya nada", no es lo mismo que que "haya nada"
+      # Cuando no hay nada explicito definido, el nodo asume TODOS los roles.
+      # Cuando explicitamente se pone que no tiene ningún rol, el nodo queda como nodo de Coordinación.
+      
+      # Configuración de seguridad de las comunicaciones externas (puerto 9200)
+      - xpack.security.enabled=true                                       # Forzar https en lugar de http
+      - xpack.security.http.ssl.enabled=true                              # Habilitar SSL
+      - xpack.security.http.ssl.key=certs/maestro1/maestro1.key                   # Clave privada del nodo
+      - xpack.security.http.ssl.certificate=certs/maestro1/maestro1.crt           # Certificado del nodo
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt   # Entidad certificadora de confianza.
+                                                                          # De forma que cuando otro nodo: maestro2 presente su certificado, 
+                                                                          # maestro1 lo dé por válido al provenir de una entidad certificadora de confianza.
+                                                                          # de confianza.
+      # Configuración de seguridad de las comunicaciones internas (puerto 9300)
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/maestro1/maestro1.key
+      - xpack.security.transport.ssl.certificate=certs/maestro1/maestro1.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+
+      - xpack.license.self_generated.type=${LICENSE}         # Tipo de licencia que se va a generar
+
+      - xpack.ml.use_auto_machine_memory_percent=true        # Para que ES limite la memoria de las tareas de Machine Learning
+
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  maestro2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - esdata02:/usr/share/elasticsearch/data
+    environment:
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
+      - node.name=maestro2
+      - cluster.name=${CLUSTER_NAME}
+      - cluster.initial_master_nodes=maestro1,maestro2
+      - discovery.seed_hosts=maestro1
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - node.roles=[master]                               # NODO MAESTRO
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/maestro2/maestro2.key
+      - xpack.security.http.ssl.certificate=certs/maestro2/maestro2.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/maestro2/maestro2.key
+      - xpack.security.transport.ssl.certificate=certs/maestro2/maestro2.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - xpack.ml.use_auto_machine_memory_percent=true
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  datos1:
+    depends_on:
+      - maestro2
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - esdata03:/usr/share/elasticsearch/data
+    environment:
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
+      - node.name=datos1
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.seed_hosts=maestro1,maestro2
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - node.roles=[data, master, voting_only]            # NODO DE DATOS, que puede votar al elegir maestro, pero no puede ser maestro.
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/datos1/datos1.key
+      - xpack.security.http.ssl.certificate=certs/datos1/datos1.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/datos1/datos1.key
+      - xpack.security.transport.ssl.certificate=certs/datos1/datos1.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - xpack.ml.use_auto_machine_memory_percent=true
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  kibana:
+    depends_on:
+      maestro1:
+        condition: service_healthy
+      maestro2:
+        condition: service_healthy
+      datos1:
+        condition: service_healthy
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/kibana/config/certs
+      - kibanadata:/usr/share/kibana/data
+    ports:
+      - ${KIBANA_PORT}:5601
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=https://maestro1:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+    mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+volumes:
+  certs:
+    driver: local
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
+  esdata03:
+    driver: local
+  kibanadata:
+    driver: local
