@@ -1,0 +1,93 @@
+{
+  "@timestamp": "2024-12-12T10:53:26.719Z",
+  "@metadata": {
+    "beat": "filebeat",
+    "type": "_doc",
+    "version": "8.16.1"
+  },
+  "log": {
+    "file": {
+      "path": "/tmp/logs/access_log"
+    },
+    "offset": 0
+  },
+  "message": "172.19.0.1 - - [12/Dec/2024:10:36:36 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+  "input": {
+    "type": "log"
+  },
+  "ecs": {
+    "version": "8.0.0"
+  },
+  "host": {
+    "name": "9e7efd0a577f"
+  },
+  "agent": {
+    "ephemeral_id": "164f021b-ae77-495f-b677-ff19564449aa",
+    "id": "59f78b24-254e-484d-b74f-f28fc4bb4b22",
+    "name": "9e7efd0a577f",
+    "type": "filebeat",
+    "version": "8.16.1"
+  }
+}
+{
+  "@timestamp": "2024-12-12T10:53:26.720Z",
+  "@metadata": {
+    "beat": "filebeat",
+    "type": "_doc",
+    "version": "8.16.1"
+  },
+  "ecs": {
+    "version": "8.0.0"
+  },
+  "log": {
+    "offset": 86,
+    "file": {
+      "path": "/tmp/logs/access_log"
+    }
+  },
+  "message": "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+  "input": {
+    "type": "log"
+  },
+  "host": {
+    "name": "9e7efd0a577f"
+  },
+  "agent": {
+    "name": "9e7efd0a577f",
+    "type": "filebeat",
+    "version": "8.16.1",
+    "ephemeral_id": "164f021b-ae77-495f-b677-ff19564449aa",
+    "id": "59f78b24-254e-484d-b74f-f28fc4bb4b22"
+  }
+}
+{
+  "@timestamp": "2024-12-12T10:53:26.720Z",
+  "@metadata": {
+    "beat": "filebeat",
+    "type": "_doc",
+    "version": "8.16.1"
+  },
+  "agent": {
+    "name": "9e7efd0a577f",
+    "type": "filebeat",
+    "version": "8.16.1",
+    "ephemeral_id": "164f021b-ae77-495f-b677-ff19564449aa",
+    "id": "59f78b24-254e-484d-b74f-f28fc4bb4b22"
+  },
+  "log": {
+    "file": {
+      "path": "/tmp/logs/access_log"
+    },
+    "offset": 172
+  },
+  "message": "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+  "input": {
+    "type": "log"
+  },
+  "ecs": {
+    "version": "8.0.0"
+  },
+  "host": {
+    "name": "9e7efd0a577f"
+  }
+}

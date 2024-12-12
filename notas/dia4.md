@@ -258,3 +258,7 @@ Proxy?
         |
         CONTENEDOR 2
     
+85 bytes -> 2 Kbs en ES x 6
+1M
+85 MB.   -> 2 G x 6 = 12Gbs
+

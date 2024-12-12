@@ -17,4 +17,9 @@ services:
             - /home/ubuntu/environment/datos/apache/logs:/tmp/logs
 
     
-#    logstash:
+    logstash: # fqdn que se da alta en el dns interno de docker 
+              # Y nos permite desde otro contenedor referenciar a este
+        container_name:     milogstash
+        image:              docker.elastic.co/logstash/logstash:8.16.1
+        volumes:            
+            - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf

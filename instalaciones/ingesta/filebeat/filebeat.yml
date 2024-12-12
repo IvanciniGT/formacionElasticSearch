@@ -4,6 +4,8 @@ filebeat.inputs:
     - /tmp/logs/access_log
 
 
-#output.logstash:
-output.console:
-  pretty: true
+output.logstash:
+  hosts: ["logstash:5044"] # fqdn con el que dreferirnos al servidor (contenedor) que corre logstash
+  
+#output.console:
+  #pretty: true

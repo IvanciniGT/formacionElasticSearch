@@ -1,0 +1,111 @@
+
+{
+       "message" => "172.19.0.1 - - [12/Dec/2024:10:36:36 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+         "event" => {
+        "original" => "172.19.0.1 - - [12/Dec/2024:10:36:36 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\""
+    },
+         "agent" => {
+                  "id" => "63946999-a44f-4bc3-b773-4903e7b73bcb",
+                "name" => "184e1b1f3d2f",
+             "version" => "8.16.1",
+        "ephemeral_id" => "838196f4-b168-4c92-9a7d-c6a78f787264",
+                "type" => "filebeat"
+    },
+          "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+    "@timestamp" => 2024-12-12T11:30:41.416Z,
+           "log" => {
+          "file" => {
+            "path" => "/tmp/logs/access_log"
+        },
+        "offset" => 0
+    },
+      "@version" => "1",
+          "host" => {
+        "name" => "184e1b1f3d2f"
+    },
+         "input" => {
+        "type" => "log"
+    },
+           "ecs" => {
+        "version" => "8.0.0"
+    }
+}
+
+
+
+
+
+
+{
+       "message" => "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+         "event" => {
+        "original" => "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\""
+    },
+         "agent" => {
+                  "id" => "63946999-a44f-4bc3-b773-4903e7b73bcb",
+                "name" => "184e1b1f3d2f",
+             "version" => "8.16.1",
+        "ephemeral_id" => "838196f4-b168-4c92-9a7d-c6a78f787264",
+                "type" => "filebeat"
+    },
+          "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+    "@timestamp" => 2024-12-12T11:30:41.416Z,
+           "log" => {
+          "file" => {
+            "path" => "/tmp/logs/access_log"
+        },
+        "offset" => 172
+    },
+      "@version" => "1",
+          "host" => {
+        "name" => "184e1b1f3d2f"
+    },
+         "input" => {
+        "type" => "log"
+    },
+           "ecs" => {
+        "version" => "8.0.0"
+    }
+}
+
+{
+       "message" => "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+         "event" => {
+        "original" => "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\""
+    },
+         "agent" => {
+                  "id" => "63946999-a44f-4bc3-b773-4903e7b73bcb",
+                "name" => "184e1b1f3d2f",
+             "version" => "8.16.1",
+        "ephemeral_id" => "838196f4-b168-4c92-9a7d-c6a78f787264",
+                "type" => "filebeat"
+    },
+          "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+    "@timestamp" => 2024-12-12T11:30:41.416Z,
+           "log" => {
+          "file" => {
+            "path" => "/tmp/logs/access_log"
+        },
+        "offset" => 86
+    },
+      "@version" => "1",
+          "host" => {
+        "name" => "184e1b1f3d2f"
+    },
+         "input" => {
+        "type" => "log"
+    },
+           "ecs" => {
+        "version" => "8.0.0"
+    }
+}
+[2024-12-12T11:31:29,910][INFO ][logstash.licensechecker.licensereader] Failed to perform request {:message=>"elasticsearch: Temporary failure in name resolution", :exception=>Manticore::ResolutionFailure, :cause=>#<Java::JavaNet::UnknownHostException: elasticsearch: Temporary failure in name resolution>}
+[2024-12-12T11:31:29,912][WARN ][logstash.licensechecker.licensereader] Attempted to resurrect connection to dead ES instance, but got an error {:url=>"http://elasticsearch:9200/", :exception=>LogStash::Outputs::ElasticSearch::HttpClient::Pool::HostUnreachableError, :message=>"Elasticsearch Unreachable: [http://elasticsearch:9200/][Manticore::ResolutionFailure] elasticsearch: Temporary failure in name resolution"}
+[2024-12-12T11:31:29,926][ERROR][logstash.licensechecker.licensereader] Unable to retrieve Elasticsearch cluster info. {:message=>"No Available connections", :exception=>LogStash::Outputs::ElasticSearch::HttpClient::Pool::NoConnectionAvailableError}
+[2024-12-12T11:31:29,937][ERROR][logstash.licensechecker.licensereader] Unable to retrieve license information from license server {:message=>"No Available connections"}
