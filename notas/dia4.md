@@ -262,3 +262,18 @@ Proxy?
 1M
 85 MB.   -> 2 G x 6 = 12Gbs
 
+---
+
+
+Apache1 ---> Genera access_log  
+                   ^
+    Filebeat 1 -- Lee y lo manda a  --------------+
+                                                  |
+Apache2 ---> Genera access_log                    |
+                   ^                              |    
+    Filebeat 2 -- Lee y lo manda a  --------------+--->     Logstash     -----------> ES
+                                                  |  (pre-procesar el fichero)
+Apache3 ---> Genera access_log                    |
+                   ^                              |
+    Filebeat 4 -- Lee y lo manda a  --------------+
+    

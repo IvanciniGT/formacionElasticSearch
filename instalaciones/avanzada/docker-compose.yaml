@@ -5,7 +5,7 @@ services:
   setup:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
     user: "0"
     command: >
       bash -c '
@@ -99,7 +99,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datamaestro1:/usr/share/elasticsearch/data
     environment:
       - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
@@ -170,7 +170,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datamaestro2:/usr/share/elasticsearch/data
     environment:
       - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
@@ -214,7 +214,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datadatos1:/usr/share/elasticsearch/data
     environment:
       - ES_JAVA_OPTS=-Xms1500m -Xmx1500m                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
@@ -264,7 +264,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datadatos2:/usr/share/elasticsearch/data
     environment:
       - ES_JAVA_OPTS=-Xms1500m -Xmx1500m                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
@@ -313,7 +313,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datadatos3:/usr/share/elasticsearch/data
     environment:
       ES_JAVA_OPTS: -Xms1500m -Xmx1500m                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
@@ -363,7 +363,7 @@ services:
     ports:
       - ${ES_PORT}:9200
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datacoordinador1:/usr/share/elasticsearch/data
     environment:
       - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
@@ -408,7 +408,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/elasticsearch/config/certs
       - datacoordinador2:/usr/share/elasticsearch/data
     environment:
       - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
@@ -462,7 +462,7 @@ services:
         condition: service_healthy
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
     volumes:
-      - certs:/usr/share/kibana/config/certs
+      - /home/ubuntu/environment/datos/elastic/certs:/usr/share/kibana/config/certs
       - kibanadata:/usr/share/kibana/data
     ports:
       - ${KIBANA_PORT}:5601
@@ -472,6 +472,7 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+      - monitoring.ui.ccs.enabled=false
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
@@ -484,8 +485,6 @@ services:
       retries: 120
 
 volumes:
-  certs:
-    driver: local
   datamaestro1:
     driver: local
   datamaestro2:
