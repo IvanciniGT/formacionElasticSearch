@@ -277,3 +277,47 @@ Apache3 ---> Genera access_log                    |
                    ^                              |
     Filebeat 4 -- Lee y lo manda a  --------------+
     
+    
+    
+---
+
+
+# REGEX
+
+Se basan en patrones.
+
+Un patron es un conjunto de subpatrones, que lo puedo poner:
+- Secuencialmente (uno detras de otro: subpatron1subpatron2)
+- O excluyentes  (subpatron1|subpatron2)
+
+Qué es un subpatrón?
+    - Una secuencia de caracteres
+        HOLA                            Debe aparecer literalmente HOLA
+        [HOLA]                          Debe aparecer un caracter de esos: H, O, L, A
+        [a-z]                           Un caracter de la a a la z
+        [a-zA-Z0-9]
+        [a-záéíóúñ]
+        .                               Cualquier caracter
+        \s                              Cualquier blanco (espacio, tabulador, salto linea)
+    - Modificador de cantidad
+        Nada                            Debe aparecer 1 vez                                 1
+        ?                               Puede aparecer o no                                 0-1
+        *                               Puede no aparece o aparecer muchas veces            0-infinito
+        +                               Debe aparecer al menos 1 vez                        1- infinito
+        {3}                             Debe aparecer 3 veces                               3
+        {3,8}                           Debe aparecer entre 3 y 8 veces                     3-8
+
+Especiales:
+- ^             Empieza por
+- $             Acaba por
+- ()            Agrupar
+
+
+Un número entre 1 y 19
+    (1[0-9])|([1-9])
+
+Validar un email (cutre)
+    [a-z_.-]+@([a-z]+[.])+[a-z]{2,10}
+    
+    ivan.osuna@gmail.com
+    ivan.osuna@sub.gmail.com
