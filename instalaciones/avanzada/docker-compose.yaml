@@ -100,11 +100,9 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-      - esdata01:/usr/share/elasticsearch/data
-    ports:
-      - ${ES_PORT}:9200
+      - datamaestro1:/usr/share/elasticsearch/data
     environment:
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
+      - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
       - node.name=maestro1                                # Es un nombre que identifica a este nodo dentro del cluster de ES.
                                                           # Ésto es interno de ElasticSearch, no tiene nada que ver con el nombre del contenedor.
                                                           # Ni con el nombre del host... ni el nombre de red.
@@ -120,7 +118,7 @@ services:
       # En este ejemplo, no hay nada de tipos de nodos.
 
 #      - node.roles=[]                                     # Le pongo que no tiene ningún rol especial. NODO COORDINADOR
-      - node.roles=[master]                               # NODO MAESTRO
+      - node.roles=master                               # NODO MAESTRO
 #      - node.roles=[data, master, voting_only]            # NODO DE DATOS, que puede votar al elegir maestro, pero no puede ser maestro.
 #      - node.roles=[data_content]                         # Es un data de un tipo muy concreto: data_content. 
                                                           # Otros tipos de data: data_hot, data_warm, data_cold, data_frozen
@@ -167,18 +165,21 @@ services:
       retries: 120
 
   maestro2:
+    depends_on:
+      setup:
+        condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-      - esdata02:/usr/share/elasticsearch/data
+      - datamaestro2:/usr/share/elasticsearch/data
     environment:
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
+      - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
       - node.name=maestro2
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=maestro1,maestro2
       - discovery.seed_hosts=maestro1
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - node.roles=[master]                               # NODO MAESTRO
+      - node.roles=master                              # NODO MAESTRO
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -209,18 +210,19 @@ services:
 
   datos1:
     depends_on:
-      - maestro2
+      setup:
+        condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-      - esdata03:/usr/share/elasticsearch/data
+      - datadatos1:/usr/share/elasticsearch/data
     environment:
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
+      - ES_JAVA_OPTS=-Xms1500m -Xmx1500m                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
       - node.name=datos1
       - cluster.name=${CLUSTER_NAME}
       - discovery.seed_hosts=maestro1,maestro2
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - node.roles=[data, master, voting_only]            # NODO DE DATOS, que puede votar al elegir maestro, pero no puede ser maestro.
+      - node.roles=data, master, voting_only            # NODO DE DATOS, que puede votar al elegir maestro, pero no puede ser maestro.
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -249,6 +251,207 @@ services:
       timeout: 10s
       retries: 120
 
+
+
+
+
+
+
+
+  datos2:
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - datadatos2:/usr/share/elasticsearch/data
+    environment:
+      - ES_JAVA_OPTS=-Xms1500m -Xmx1500m                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
+      - node.name=datos2
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.seed_hosts=maestro1,maestro2
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - node.roles=data, ml            # NODO DE DATOS, en este caso del curso, le vamos también machine_learning
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/datos2/datos2.key
+      - xpack.security.http.ssl.certificate=certs/datos2/datos2.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/datos2/datos2.key
+      - xpack.security.transport.ssl.certificate=certs/datos2/datos2.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - xpack.ml.use_auto_machine_memory_percent=true
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+
+
+
+
+
+
+  datos3:
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - datadatos3:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: -Xms1500m -Xmx1500m                        # Memoria de la JVM.. Mínima y máxima a 2 Gb
+      node.name: datos3
+      cluster.name: ${CLUSTER_NAME}
+      discovery.seed_hosts: maestro1,maestro2
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      node.roles: "data,ml"            # NODO DE DATOS, en este caso del curso, le vamos también machine_learning
+      bootstrap.memory_lock: true
+      xpack.security.enabled: true
+      xpack.security.http.ssl.enabled: true
+      xpack.security.http.ssl.key: certs/datos3/datos3.key
+      xpack.security.http.ssl.certificate: certs/datos3/datos3.crt
+      xpack.security.http.ssl.certificate_authorities: certs/ca/ca.crt
+      xpack.security.transport.ssl.enabled: true
+      xpack.security.transport.ssl.key: certs/datos3/datos3.key
+      xpack.security.transport.ssl.certificate: certs/datos3/datos3.crt
+      xpack.security.transport.ssl.certificate_authorities: certs/ca/ca.crt
+      xpack.security.transport.ssl.verification_mode: certificate
+      xpack.license.self_generated.type: ${LICENSE}
+      xpack.ml.use_auto_machine_memory_percent: true
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+
+
+
+
+
+  coordinador1:
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    ports:
+      - ${ES_PORT}:9200
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - datacoordinador1:/usr/share/elasticsearch/data
+    environment:
+      - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
+      - node.name=coordinador1
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.seed_hosts=maestro1,maestro2            # A quién se presenta. Una vez presentado a algún nodo, eso otro nodo, ya le presenta a sus amiguitos.
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - node.roles=[]            # No tiene roles preasignados por dedicarlo solo a coordinación
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/coordinador1/coordinador1.key
+      - xpack.security.http.ssl.certificate=certs/coordinador1/coordinador1.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/coordinador1/coordinador1.key
+      - xpack.security.transport.ssl.certificate=certs/coordinador1/coordinador1.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - xpack.ml.use_auto_machine_memory_percent=true
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+
+
+  coordinador2:
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - datacoordinador2:/usr/share/elasticsearch/data
+    environment:
+      - ES_JAVA_OPTS=-Xms1000m -Xmx1000m                        # Memoria de la JVM.. Mínima y máxima a 1 Gb
+      - node.name=coordinador2
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.seed_hosts=maestro1,maestro2            # A quién se presenta. Una vez presentado a algún nodo, eso otro nodo, ya le presenta a sus amiguitos.
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - node.roles=[]            # No tiene roles preasignados por dedicarlo solo a coordinación
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/coordinador2/coordinador2.key
+      - xpack.security.http.ssl.certificate=certs/coordinador2/coordinador2.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/coordinador2/coordinador2.key
+      - xpack.security.transport.ssl.certificate=certs/coordinador2/coordinador2.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - xpack.ml.use_auto_machine_memory_percent=true
+    mem_limit: ${MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+
+
+
+
+
+
+
   kibana:
     depends_on:
       maestro1:
@@ -265,7 +468,7 @@ services:
       - ${KIBANA_PORT}:5601
     environment:
       - SERVERNAME=kibana
-      - ELASTICSEARCH_HOSTS=https://maestro1:9200
+      - ELASTICSEARCH_HOSTS=https://coordinador1:9200 # Aqui iría un balanceador entre los coordinadores
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
@@ -283,11 +486,19 @@ services:
 volumes:
   certs:
     driver: local
-  esdata01:
+  datamaestro1:
     driver: local
-  esdata02:
+  datamaestro2:
     driver: local
-  esdata03:
+  datadatos1:
+    driver: local
+  datadatos2:
+    driver: local
+  datadatos3:
+    driver: local
+  datacoordinador1:
+    driver: local
+  datacoordinador2:
     driver: local
   kibanadata:
     driver: local
