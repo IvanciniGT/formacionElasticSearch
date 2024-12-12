@@ -242,4 +242,19 @@ Proxy?
     El proxy actua en beneficio (en lugar) del cliente
     Cuando yo (cliente) quiero ir a algún sitio, en lugar de ir yo, le delego el trabajo a un proxy
     El proxy es el que entonoces va a donde yo quería ir, espera él la respuesta.. y me la entrega
+---
+
+
+
+    Servidor web (Apache, nginx) - CONTENEDOR 1
+        v
+        escribe el log /var/apache/log/
+        v
+        access.log
+        ^
+        leyendo el log /datos-a-indexar
+        ^
+    Filebeat    - http ->          Logstash    - http ->   ES
+        |
+        CONTENEDOR 2
     

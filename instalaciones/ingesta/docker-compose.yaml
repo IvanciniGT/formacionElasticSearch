@@ -1,0 +1,14 @@
+services:
+
+    servidor-web:
+        container_name:     miapache
+        image:              httpd:latest
+        ports:
+            - 8082:80
+        volumes:
+            - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            - /home/ubuntu/environment/datos/apache/logs:/usr/local/apache2/logs
+    
+#    filebeat:
+    
+#    logstash:
