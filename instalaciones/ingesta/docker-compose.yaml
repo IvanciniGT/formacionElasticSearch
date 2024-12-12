@@ -9,6 +9,12 @@ services:
             - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
             - /home/ubuntu/environment/datos/apache/logs:/usr/local/apache2/logs
     
-#    filebeat:
+    filebeat:
+        container_name:     mifilebeat
+        image:              docker.elastic.co/beats/filebeat:8.16.1
+        volumes:            
+            - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+            - /home/ubuntu/environment/datos/apache/logs:/tmp/logs
+
     
 #    logstash:

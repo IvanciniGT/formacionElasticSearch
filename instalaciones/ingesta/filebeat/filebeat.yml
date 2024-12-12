@@ -1,0 +1,9 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - /tmp/logs/access_log
+
+
+#output.logstash:
+output.console:
+  pretty: true
