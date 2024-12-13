@@ -25,16 +25,16 @@
 (***) Esto es lo que falta: Mandar los documentos desde Logstash hasta ElasticSearch para su indexación.
 
 Tareas / Cosas a tener en cuenta:
-- Cómo conectamos al ES
-- En qué indices cargamos (Mappings para la indexación, Settings)
-- Definir una politica de rotado de los índices
-- Si no tenemos solo un índice, sino muchos índices... tendré que asociar los mappings y settings a todos ellos:
-    - Plantilla de Índices (habrá que definirla)
-- Ciclo de vida de esos índices. Los viejos... no los querré en discos caros.
-    - Los querré ir cerrando ->
-        - Podemos hacer un merge (juntar segmentos)     \
-        - Shrink (juntar shards)                         > Mejorar performance en búsquedas y ahorrar pasta en almacenamiento
-        - Reorganizar la estructura del índice interna  /
+√ Cómo conectamos al ES
+√ En qué indices cargamos (Mappings para la indexación, Settings)
+√ Definir una politica de rotado de los índices
+√ Si no tenemos solo un índice, sino muchos índices... tendré que asociar los mappings y settings a todos ellos:
+    √ Plantilla de Índices (habrá que definirla)
+√ Ciclo de vida de esos índices. Los viejos... no los querré en discos caros.
+    √ Los querré ir cerrando ->
+        √ Podemos hacer un merge (juntar segmentos)     \
+        √ Shrink (juntar shards)                         > Mejorar performance en búsquedas y ahorrar pasta en almacenamiento
+        √ Reorganizar la estructura del índice interna  /
 
 Hay 2 formas de enfrentarnos a todo esto:
 1. Forma tradicional pre Elastic 8              INDICES TRADICIONALES
@@ -112,3 +112,41 @@ Si por debajo uso una cabina con RAID... multiplica eso por x2.5 x3: 300Kbs
     2 Kbs --> 300kbs ES UNA AUTENTICA LOCURA !
     
 Y ojo! hemos tratado bastante el fichero... Le hemos quitado campos por un tubo!
+
+---
+
+URL: /api/v1/miEndPoint?param4=unValor&param2=OtroValor
+
+miEndPoint
+param2
+PARAM2
+
+Tokenizador, debería usar algo que parta por : / ? & =
+
+
+# Plantilla de Índices (habrá que definirla)
+
+Al definir una plantilla de indices, en esa plantilla incluiremos un campo index_patterns.
+Ahí pondremos los patrones de los índices a los que se debe aplicar esta plantilla.
+
+Plantilla: APACHE
+    Y en ella digo que se aplique a todos los indices que se creen cuyo nombre comience por "apache-*"
+
+Aquí puede ocurrir una cosa:
+Podría tener varias plantillas que apliquen al mismo índice
+
+Plantilla: Apache-Negocio
+    index_patterns: apache-negocio-*
+Plantilla: Apache-Sistemas
+    index_patterns: apache-sistemas-*
+
+Y al crear un índice cuyo nombre sea: "apache-sistemas-2024", qué plantilla o plantillas le aplciarían?
+    Plantilla: Apache-Sistemas
+    Plantilla: APACHE
+
+Si tienen definiciones complementarias: SE APLICAN TODAS
+Pero si tienen definiciones contradictorias, cuál se aplica? Ahí entra el concepto "priority"
+
+Podría crear una plantilla directamente enb ElasticSearch haciendo un :
+POST /_index_templates/NOMBRE_PLANTILLA
+{JSON con la especificación de mappings y settings}

@@ -1,0 +1,4234 @@
+Using bundled JDK: /usr/share/logstash/jdk
+Sending Logstash logs to /usr/share/logstash/logs which is now configured via log4j2.properties
+[2024-12-13T11:00:51,179][WARN ][deprecation.logstash.settings] The setting `http.host` is a deprecated alias for `api.http.host` and will be removed in a future release of Logstash. Please use api.http.host instead
+[2024-12-13T11:00:51,200][INFO ][logstash.runner          ] Log4j configuration path used is: /usr/share/logstash/config/log4j2.properties
+[2024-12-13T11:00:51,201][WARN ][deprecation.logstash.runner] 'pipeline.buffer.type' setting is not explicitly defined.Before moving to 9.x set it to 'heap' and tune heap size upward, or set it to 'direct' to maintain existing behavior.
+[2024-12-13T11:00:51,203][INFO ][logstash.runner          ] Starting Logstash {"logstash.version"=>"8.16.1", "jruby.version"=>"jruby 9.4.9.0 (3.1.4) 2024-11-04 547c6b150e OpenJDK 64-Bit Server VM 21.0.5+11-LTS on 21.0.5+11-LTS +indy +jit [x86_64-linux]"}
+[2024-12-13T11:00:51,207][INFO ][logstash.runner          ] JVM bootstrap flags: [-Xms1g, -Xmx1g, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djruby.compile.invokedynamic=true, -XX:+HeapDumpOnOutOfMemoryError, -Djava.security.egd=file:/dev/urandom, -Dlog4j2.isThreadContextMapInheritable=true, -Dlogstash.jackson.stream-read-constraints.max-string-length=200000000, -Dlogstash.jackson.stream-read-constraints.max-number-length=10000, -Dls.cgroup.cpuacct.path.override=/, -Dls.cgroup.cpu.path.override=/, -Djruby.regexp.interruptible=true, -Djdk.io.File.enableADS=true, --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED, --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED, --add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED, --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED, --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED, --add-opens=java.base/java.security=ALL-UNNAMED, --add-opens=java.base/java.io=ALL-UNNAMED, --add-opens=java.base/java.nio.channels=ALL-UNNAMED, --add-opens=java.base/sun.nio.ch=ALL-UNNAMED, --add-opens=java.management/sun.management=ALL-UNNAMED, -Dio.netty.allocator.maxOrder=11]
+[2024-12-13T11:00:51,211][INFO ][logstash.runner          ] Jackson default value override `logstash.jackson.stream-read-constraints.max-string-length` configured to `200000000`
+[2024-12-13T11:00:51,211][INFO ][logstash.runner          ] Jackson default value override `logstash.jackson.stream-read-constraints.max-number-length` configured to `10000`
+[2024-12-13T11:00:51,232][INFO ][logstash.settings        ] Creating directory {:setting=>"path.queue", :path=>"/usr/share/logstash/data/queue"}
+[2024-12-13T11:00:51,235][INFO ][logstash.settings        ] Creating directory {:setting=>"path.dead_letter_queue", :path=>"/usr/share/logstash/data/dead_letter_queue"}
+[2024-12-13T11:00:51,537][INFO ][logstash.agent           ] No persistent UUID file found. Generating new UUID {:uuid=>"ffb88968-0714-4251-aa06-073e7a887f77", :path=>"/usr/share/logstash/data/uuid"}
+[2024-12-13T11:00:52,070][WARN ][logstash.monitoringextension.pipelineregisterhook] xpack.monitoring.enabled has not been defined, but found elasticsearch configuration. Please explicitly set `xpack.monitoring.enabled: true` in logstash.yml
+[2024-12-13T11:00:52,070][WARN ][deprecation.logstash.monitoringextension.pipelineregisterhook] Internal collectors option for Logstash monitoring is deprecated and targeted for removal in the next major version.
+Please configure Elastic Agent to monitor Logstash. Documentation can be found at: 
+https://www.elastic.co/guide/en/logstash/current/monitoring-with-elastic-agent.html
+[2024-12-13T11:00:52,472][INFO ][logstash.licensechecker.licensereader] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://elasticsearch:9200/]}}
+[2024-12-13T11:00:52,521][INFO ][logstash.licensechecker.licensereader] Failed to perform request {:message=>"elasticsearch: Temporary failure in name resolution", :exception=>Manticore::ResolutionFailure, :cause=>#<Java::JavaNet::UnknownHostException: elasticsearch: Temporary failure in name resolution>}
+[2024-12-13T11:00:52,525][WARN ][logstash.licensechecker.licensereader] Attempted to resurrect connection to dead ES instance, but got an error {:url=>"http://elasticsearch:9200/", :exception=>LogStash::Outputs::ElasticSearch::HttpClient::Pool::HostUnreachableError, :message=>"Elasticsearch Unreachable: [http://elasticsearch:9200/][Manticore::ResolutionFailure] elasticsearch: Temporary failure in name resolution"}
+[2024-12-13T11:00:52,532][INFO ][logstash.licensechecker.licensereader] Failed to perform request {:message=>"elasticsearch", :exception=>Manticore::ResolutionFailure, :cause=>#<Java::JavaNet::UnknownHostException: elasticsearch>}
+[2024-12-13T11:00:52,532][WARN ][logstash.licensechecker.licensereader] Marking url as dead. Last error: [LogStash::Outputs::ElasticSearch::HttpClient::Pool::HostUnreachableError] Elasticsearch Unreachable: [http://elasticsearch:9200/][Manticore::ResolutionFailure] elasticsearch {:url=>http://elasticsearch:9200/, :error_message=>"Elasticsearch Unreachable: [http://elasticsearch:9200/][Manticore::ResolutionFailure] elasticsearch", :error_class=>"LogStash::Outputs::ElasticSearch::HttpClient::Pool::HostUnreachableError"}
+[2024-12-13T11:00:52,534][WARN ][logstash.licensechecker.licensereader] Attempt to fetch Elasticsearch cluster info failed. Sleeping for 0.02 {:fail_count=>1, :exception=>"Elasticsearch Unreachable: [http://elasticsearch:9200/][Manticore::ResolutionFailure] elasticsearch"}
+[2024-12-13T11:00:52,556][ERROR][logstash.licensechecker.licensereader] Unable to retrieve Elasticsearch cluster info. {:message=>"No Available connections", :exception=>LogStash::Outputs::ElasticSearch::HttpClient::Pool::NoConnectionAvailableError}
+[2024-12-13T11:00:52,557][ERROR][logstash.licensechecker.licensereader] Unable to retrieve license information from license server {:message=>"No Available connections"}
+[2024-12-13T11:00:52,570][ERROR][logstash.monitoring.internalpipelinesource] Failed to fetch X-Pack information from Elasticsearch. This is likely due to failure to reach a live Elasticsearch cluster.
+[2024-12-13T11:00:52,706][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600, :ssl_enabled=>false}
+[2024-12-13T11:00:53,623][INFO ][org.reflections.Reflections] Reflections took 142 ms to scan 1 urls, producing 149 keys and 523 values
+[2024-12-13T11:00:54,308][INFO ][logstash.javapipeline    ] Pipeline `main` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+[2024-12-13T11:00:54,327][INFO ][logstash.outputs.elasticsearch][main] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>["https://172.31.41.172:8080"]}
+[2024-12-13T11:00:54,348][INFO ][logstash.outputs.elasticsearch][main] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[https://elastic:xxxxxx@172.31.41.172:8080/]}}
+[2024-12-13T11:00:54,670][WARN ][logstash.outputs.elasticsearch][main] Restored connection to ES instance {:url=>"https://elastic:xxxxxx@172.31.41.172:8080/"}
+[2024-12-13T11:00:54,672][INFO ][logstash.outputs.elasticsearch][main] Elasticsearch version determined (8.16.1) {:es_version=>8}
+[2024-12-13T11:00:54,673][WARN ][logstash.outputs.elasticsearch][main] Detected a 6.x and above cluster: the `type` event field won't be used to determine the document _type {:es_version=>8}
+[2024-12-13T11:00:54,690][INFO ][logstash.outputs.elasticsearch][main] Not eligible for data streams because config contains one or more settings that are not compatible with data streams: {"template"=>"/usr/share/logstash/templates/plantilla.json", "template_name"=>"plantilla-apache-", "index"=>"apache-%{+YYYY.MM}", "manage_template"=>"true"}
+[2024-12-13T11:00:54,691][INFO ][logstash.outputs.elasticsearch][main] Data streams auto configuration (`data_stream => auto` or unset) resolved to `false`
+[2024-12-13T11:00:54,693][WARN ][logstash.filters.grok    ][main] ECS v8 support is a preview of the unreleased ECS v8, and uses the v1 patterns. When Version 8 of the Elastic Common Schema becomes available, this plugin will need to be updated
+[2024-12-13T11:00:54,709][INFO ][logstash.outputs.elasticsearch][main] Using mapping template from {:path=>"/usr/share/logstash/templates/plantilla.json"}
+[2024-12-13T11:00:54,722][INFO ][logstash.outputs.elasticsearch][main] Installing Elasticsearch template {:name=>"plantilla-apache-"}
+[2024-12-13T11:00:54,788][ERROR][logstash.outputs.elasticsearch][main] Failed to install template {:message=>"Got response code '400' contacting Elasticsearch at URL 'https://172.31.41.172:8080/_index_template/plantilla-apache-'", :exception=>LogStash::Outputs::ElasticSearch::HttpClient::Pool::BadResponseCodeError, :backtrace=>["/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client/manticore_adapter.rb:84:in `perform_request'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client/pool.rb:355:in `perform_request_to_url'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client/pool.rb:341:in `block in perform_request'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client/pool.rb:429:in `with_connection'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client/pool.rb:340:in `perform_request'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client/pool.rb:348:in `block in Pool'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client.rb:423:in `template_put'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/http_client.rb:86:in `template_install'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/template_manager.rb:44:in `install'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch/template_manager.rb:32:in `install_template'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch.rb:663:in `install_template'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch.rb:371:in `finish_register'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/outputs/elasticsearch.rb:328:in `block in register'", "/usr/share/logstash/vendor/bundle/jruby/3.1.0/gems/logstash-output-elasticsearch-11.22.9-java/lib/logstash/plugin_mixins/elasticsearch/common.rb:172:in `block in after_successful_connection'"], :body=>"{\"error\":{\"root_cause\":[{\"type\":\"invalid_index_template_exception\",\"reason\":\"index_template [plantilla-apache-] invalid, cause [Validation Failed: 1: unknown setting [index.index.lifecycle.name] did you mean [index.lifecycle.name]?;]\"}],\"type\":\"invalid_index_template_exception\",\"reason\":\"index_template [plantilla-apache-] invalid, cause [Validation Failed: 1: unknown setting [index.index.lifecycle.name] did you mean [index.lifecycle.name]?;]\"},\"status\":400}"}
+[2024-12-13T11:00:54,794][ERROR][logstash.outputs.elasticsearch][main] Failed to bootstrap. Pipeline "main" is going to shut down {:message=>"Got response code '400' contacting Elasticsearch at URL 'https://172.31.41.172:8080/_index_template/plantilla-apache-'", :exception=>LogStash::Outputs::ElasticSearch::HttpClient::Pool::BadResponseCodeError}
+[2024-12-13T11:00:54,860][WARN ][logstash.filters.geoip   ][main] ECS expect `target` value `posicionamiento` in ["client", "destination", "host", "observer", "server", "source"]
+[2024-12-13T11:01:00,932][INFO ][logstash.geoipdatabasemanagement.manager][main] managed geoip database has been updated on disk {:database_type=>"ASN", :database_path=>"/usr/share/logstash/data/geoip_database_management/1734087654/GeoLite2-ASN.mmdb"}
+[2024-12-13T11:01:01,055][INFO ][logstash.geoipdatabasemanagement.manager][main] managed geoip database has been updated on disk {:database_type=>"City", :database_path=>"/usr/share/logstash/data/geoip_database_management/1734087654/GeoLite2-City.mmdb"}
+[2024-12-13T11:01:01,085][INFO ][logstash.filters.geoip.databasemanager][main] By not manually configuring a database path with `database =>`, you accepted and agreed MaxMind EULA. For more details please visit https://www.maxmind.com/en/geolite2/eula
+[2024-12-13T11:01:01,085][INFO ][logstash.filters.geoip   ][main] Using geoip database {:path=>"/usr/share/logstash/data/geoip_database_management/1734087654/GeoLite2-City.mmdb"}
+[2024-12-13T11:01:01,146][INFO ][logstash.javapipeline    ][main] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>4, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>500, "pipeline.sources"=>["/usr/share/logstash/pipeline/logstash.conf"], :thread=>"#<Thread:0x79186ea0 /usr/share/logstash/logstash-core/lib/logstash/java_pipeline.rb:139 run>"}
+[2024-12-13T11:01:02,236][INFO ][logstash.javapipeline    ][main] Pipeline Java execution initialization time {"seconds"=>1.09}
+[2024-12-13T11:01:02,246][INFO ][logstash.inputs.beats    ][main] Starting input listener {:address=>"0.0.0.0:5044"}
+[2024-12-13T11:01:02,258][INFO ][logstash.javapipeline    ][main] Pipeline started {"pipeline.id"=>"main"}
+[2024-12-13T11:01:02,292][INFO ][logstash.agent           ] Pipelines running {:count=>1, :running_pipelines=>[:main], :non_running_pipelines=>[]}
+[2024-12-13T11:01:02,383][INFO ][org.logstash.beats.Server][main][431a068fcdcfecb1f8d968c8cd6d09e0ecbfb27a2bed40f75ae3efd875434faf] Starting server on port: 5044
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T10:36:38.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 86
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:03.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:03 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 344
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:05.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:05 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 1118
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:05.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:05 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 1376
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-12T12:58:53.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [12/Dec/2024:12:58:53 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 1634
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:27:54.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:27:54 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 2259
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:46.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:46 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 3468
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:47.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:47 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 4053
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:47.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:47 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 4638
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:48.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:48 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 5223
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:48.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:48 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 5808
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:57.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:57 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 6393
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:58.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:58 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 6978
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:01.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:01 +0000] \"\\x16\\x03\\x01\\x06\\xa0\\x01\" 400 226 \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 7743
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 400,
+                   "body" => {
+                "bytes" => 226
+            }
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:03.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:03 +0000] \"\\x16\\x03\\x01\\x07\" 400 226 \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 8617
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 400,
+                   "body" => {
+                "bytes" => 226
+            }
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:05.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:05 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 9053
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:06.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:06 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 9587
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:06.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:06 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 10160
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:07.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:07 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 10733
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:12.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "90.94.81.244 - - [13/Dec/2024:09:29:12 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "90.94.81.244",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.3479,
+                "lon" => -3.8169
+            },
+                 "postal_code" => "28922",
+                   "city_name" => "Alcorcón",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 11376
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:19.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:19 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 11979
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:19.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:19 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 12622
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:20.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:20 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 13227
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:30:04.000Z,
+            "message" => "90.94.81.244 - - [13/Dec/2024:09:30:04 +0000] \"-\" 408 - \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "90.94.81.244",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.3479,
+                "lon" => -3.8169
+            },
+                 "postal_code" => "28922",
+                   "city_name" => "Alcorcón",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 13832
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 408
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/index.html"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T10:06:45.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:10:06:45 +0000] \"GET /index.html HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 14149
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+[2024-12-13T11:01:07,345][WARN ][org.logstash.execution.ShutdownWatcherExt][main] {"inflight_count"=>88, "stalling_threads_info"=>{"other"=>[{"thread_id"=>54, "name"=>"[main]<beats", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/logstash-input-beats-6.9.1-java/lib/logstash/inputs/beats.rb:258:in `run'"}, {"thread_id"=>38, "name"=>"[main]-pipeline-manager", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/thwait-0.2.0/lib/thwait.rb:112:in `pop'"}], ["LogStash::Filters::GeoIP", {"source"=>["[source][address]"], "id"=>"269d34b372a8b4b57a0c94c62f10a43173756f43e3087b50f4b29ce7c1b62270", "remove_field"=>["source"], "target"=>"posicionamiento"}]=>[{"thread_id"=>50, "name"=>"[main]>worker0", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/amazing_print-1.6.0/lib/amazing_print/formatters/hash_formatter.rb:18:in `format'"}, {"thread_id"=>51, "name"=>"[main]>worker1", "current_call"=>"[...]/logstash-core/lib/logstash/java_pipeline.rb:313:in `block in multi_receive'"}, {"thread_id"=>52, "name"=>"[main]>worker2", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/stud-0.0.23/lib/stud/interval.rb:95:in `sleep'"}, {"thread_id"=>53, "name"=>"[main]>worker3", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/stud-0.0.23/lib/stud/interval.rb:95:in `sleep'"}]}}
+[2024-12-13T11:01:07,351][ERROR][org.logstash.execution.ShutdownWatcherExt][main] The shutdown process appears to be stalled due to busy or blocked plugins. Check the logs for more information.
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T10:36:38.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:10:36:38 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 172
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:03.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:03 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 430
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:04.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:04 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 688
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:04.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:04 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 946
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:05.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:05 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 1204
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:05.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:05 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 1462
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-12T12:58:53.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [12/Dec/2024:12:58:53 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.244.167.78:8082/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 1830
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.244.167.78:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:27:54.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:27:54 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 2063
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:45.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:45 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 2493
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:46.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:46 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 3663
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:47.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:47 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 4248
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:47.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:47 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 4833
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:48.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:48 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 5418
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:49.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:49 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 6003
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:58.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:58 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 6588
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:58.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:58 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 7173
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:58.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:58 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 7368
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:00.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:00 +0000] \"\\x16\\x03\\x01\\x06\\xa0\\x01\" 400 226 \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 7563
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 400,
+                   "body" => {
+                "bytes" => 226
+            }
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:01.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:01 +0000] \"\\x16\\x03\\x01\\x06\\xc0\\x01\" 400 226 \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 7653
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 400,
+                   "body" => {
+                "bytes" => 226
+            }
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:01.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:01 +0000] \"\\x16\\x03\\x01\\x06\\xc0\\x01\" 400 226 \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 8022
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 400,
+                   "body" => {
+                "bytes" => 226
+            }
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:02.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:02 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 8339
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:02.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:02 +0000] \"\\x16\\x03\\x01\\x06\\xe0\\x01\" 400 226 \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 8527
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 400,
+                   "body" => {
+                "bytes" => 226
+            }
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:04.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
+    },
+            "message" => "91.117.32.179 - - [13/Dec/2024:09:29:04 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0\"",
+    "posicionamiento" => {
+         "ip" => "91.117.32.179",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "A Coruña",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-C",
+                    "location" => {
+                "lat" => 43.3594,
+                "lon" => -8.3827
+            },
+                 "postal_code" => "15006",
+                   "city_name" => "A Coruña",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 8857
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:06.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:06 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 9971
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:07.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:07 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 10544
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:08.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:08 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 11149
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:18.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:18 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 11790
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:19.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:19 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 12395
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:19.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:19 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 13038
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:20.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:20 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 13643
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:57:43.000Z,
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:57:43 +0000] \"-\" 408 - \"-\" \"-\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 14084
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+        "response" => {
+            "status_code" => 408
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T10:36:36.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:10:36:36 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 0
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:34:45.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:34:45 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 258
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:03.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:03 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 516
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:03.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:03 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 602
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:04.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:04 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 774
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:04.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:04 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 860
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:04.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:04 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 1032
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:05.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:05 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 1290
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+             "source" => {
+        "address" => "172.19.0.1"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied",
+        [1] "_geoip_lookup_failure"
+    ],
+         "@timestamp" => 2024-12-12T11:35:06.000Z,
+         "user_agent" => {
+        "original" => "curl/7.81.0"
+    },
+            "message" => "172.19.0.1 - - [12/Dec/2024:11:35:06 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"curl/7.81.0\"",
+    "posicionamiento" => {},
+                "log" => {
+        "offset" => 1548
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:45.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:45 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 2688
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:46.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:46 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 2883
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:46.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:46 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 3078
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:46.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:46 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 3273
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:46.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:46 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 3858
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:47.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:47 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 4443
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:48.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:48 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 5028
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:48.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:48 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 5613
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:49.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:49 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 6198
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:28:58.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "37.222.190.189 - - [13/Dec/2024:09:28:58 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "37.222.190.189",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.436,
+                "lon" => -3.6515
+            },
+                 "postal_code" => "28027",
+                   "city_name" => "Madrid",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 6783
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:01.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:01 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 7833
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:01.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:01 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 8112
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:03.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
+    },
+            "message" => "91.117.32.179 - - [13/Dec/2024:09:29:03 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0\"",
+    "posicionamiento" => {
+         "ip" => "91.117.32.179",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "A Coruña",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-C",
+                    "location" => {
+                "lat" => 43.3594,
+                "lon" => -8.3827
+            },
+                 "postal_code" => "15006",
+                   "city_name" => "A Coruña",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 8699
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:05.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
+    },
+            "message" => "91.117.32.179 - - [13/Dec/2024:09:29:05 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0\"",
+    "posicionamiento" => {
+         "ip" => "91.117.32.179",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "A Coruña",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-C",
+                    "location" => {
+                "lat" => 43.3594,
+                "lon" => -8.3827
+            },
+                 "postal_code" => "15006",
+                   "city_name" => "A Coruña",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 9241
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:05.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:05 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 9398
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:06.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
+    },
+            "message" => "91.117.32.179 - - [13/Dec/2024:09:29:06 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0\"",
+    "posicionamiento" => {
+         "ip" => "91.117.32.179",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "A Coruña",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-C",
+                    "location" => {
+                "lat" => 43.3594,
+                "lon" => -8.3827
+            },
+                 "postal_code" => "15006",
+                   "city_name" => "A Coruña",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 9814
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:07.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
+    },
+            "message" => "91.117.32.179 - - [13/Dec/2024:09:29:07 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0\"",
+    "posicionamiento" => {
+         "ip" => "91.117.32.179",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "A Coruña",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-C",
+                    "location" => {
+                "lat" => 43.3594,
+                "lon" => -8.3827
+            },
+                 "postal_code" => "15006",
+                   "city_name" => "A Coruña",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 10387
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:08.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:08 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 10960
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:12.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "90.94.81.244 - - [13/Dec/2024:09:29:12 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "90.94.81.244",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Madrid",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-M",
+                    "location" => {
+                "lat" => 40.3479,
+                "lon" => -3.8169
+            },
+                 "postal_code" => "28922",
+                   "city_name" => "Alcorcón",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 11564
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:19.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:19 +0000] \"GET / HTTP/1.1\" 200 45 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 12206
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 200,
+                   "body" => {
+                "bytes" => 45
+            }
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:19.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:19 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+                "log" => {
+        "offset" => 12811
+    },
+              "input" => {
+        "type" => "log"
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/favicon.ico"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:29:20.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:29:20 +0000] \"GET /favicon.ico HTTP/1.1\" 404 196 \"http://34.242.222.250:8082/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 13416
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 404,
+                   "body" => {
+                "bytes" => 196
+            }
+        },
+         "request" => {
+              "method" => "get",
+            "referrer" => "http://34.242.222.250:8082/"
+        }
+    }
+}
+{
+                "url" => {
+        "original" => "/"
+    },
+           "@version" => "1",
+               "tags" => [
+        [0] "beats_input_codec_plain_applied"
+    ],
+         "@timestamp" => 2024-12-13T09:56:51.000Z,
+         "user_agent" => {
+        "original" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    },
+            "message" => "77.229.74.192 - - [13/Dec/2024:09:56:51 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\"",
+    "posicionamiento" => {
+         "ip" => "77.229.74.192",
+        "geo" => {
+                "country_name" => "Spain",
+                 "region_name" => "Badajoz",
+                    "timezone" => "Europe/Madrid",
+             "region_iso_code" => "ES-BA",
+                    "location" => {
+                "lat" => 38.9627,
+                "lon" => -5.8617
+            },
+                 "postal_code" => "06400",
+                   "city_name" => "Don Benito",
+            "country_iso_code" => "ES",
+              "continent_code" => "EU"
+        }
+    },
+              "input" => {
+        "type" => "log"
+    },
+                "log" => {
+        "offset" => 13896
+    },
+               "host" => {
+        "name" => "02fc1c8e8741"
+    },
+               "http" => {
+         "version" => "1.1",
+        "response" => {
+            "status_code" => 304
+        },
+         "request" => {
+            "method" => "get"
+        }
+    }
+}
+[2024-12-13T11:01:12,429][WARN ][org.logstash.execution.ShutdownWatcherExt][main] {"inflight_count"=>88, "stalling_threads_info"=>{"other"=>[{"thread_id"=>54, "name"=>"[main]<beats", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/logstash-input-beats-6.9.1-java/lib/logstash/inputs/beats.rb:258:in `run'"}, {"thread_id"=>38, "name"=>"[main]-pipeline-manager", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/thwait-0.2.0/lib/thwait.rb:112:in `pop'"}], ["LogStash::Filters::GeoIP", {"source"=>["[source][address]"], "id"=>"269d34b372a8b4b57a0c94c62f10a43173756f43e3087b50f4b29ce7c1b62270", "remove_field"=>["source"], "target"=>"posicionamiento"}]=>[{"thread_id"=>50, "name"=>"[main]>worker0", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/stud-0.0.23/lib/stud/interval.rb:95:in `sleep'"}, {"thread_id"=>51, "name"=>"[main]>worker1", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/stud-0.0.23/lib/stud/interval.rb:95:in `sleep'"}, {"thread_id"=>52, "name"=>"[main]>worker2", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/stud-0.0.23/lib/stud/interval.rb:95:in `sleep'"}, {"thread_id"=>53, "name"=>"[main]>worker3", "current_call"=>"[...]/vendor/bundle/jruby/3.1.0/gems/stud-0.0.23/lib/stud/interval.rb:95:in `sleep'"}]}}
+[2024-12-13T11:01:17,204][WARN ][logstash.runner          ] SIGTERM received. Shutting down.

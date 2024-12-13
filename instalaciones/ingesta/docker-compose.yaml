@@ -24,3 +24,4 @@ services:
         volumes:            
             - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
             - /home/ubuntu/environment/datos/elastic/certs/ca/ca.crt:/usr/share/logstash/certs/ca/ca.crt
+            - ./logstash/indice_apache.json:/usr/share/logstash/templates/plantilla.json
