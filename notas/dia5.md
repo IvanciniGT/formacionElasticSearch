@@ -150,3 +150,157 @@ Pero si tienen definiciones contradictorias, cuál se aplica? Ahí entra el conc
 Podría crear una plantilla directamente enb ElasticSearch haciendo un :
 POST /_index_templates/NOMBRE_PLANTILLA
 {JSON con la especificación de mappings y settings}
+
+
+---
+
+# DataStreams:
+
+"Simpifica" la gestión de índices.
+
+Al ingestar datos, ya no mandaremos los datos a un índice, los mandaremos a un datastream
+    data_stream_type => "logs"
+    data_stream_dataset => "apache"
+    data_stream_namespace => "produccion"
+
+En automático va a comenzar a crear índices cuyo nombre será:
+    .ds-logs-apache-produccion-0000001
+    .ds-logs-apache-produccion-0000002
+    .ds-logs-apache-produccion-0000003
+    .ds-logs-apache-produccion-0000004
+La creación de esos índices viene marcada por el ILM: Politica de ciclo de vida de los índices...
+Que en este caso, asociaremos al datastream:
+- Puede ser en base a la fecha
+- Puede ser en base al tamaño en bytes
+- Puede ser en base al número de documentos
+
+Nosotros, siempre lo mandaremos al datastream:
+    logs, apache, producción
+    
+    
+Lo primero es crear una POLITICA de ciclo de vida de INDICES.
+Crear una plantilla para DATASTREAMS, que tenga asociada esa politica: index.lifecycle.name
+Y creo el datastream.
+
+Cuando mando datos al datastream, especifico:
+    type                logs, metricas
+    dataset             apache, bbdd
+    namespace           produccion, desarrollo
+
+Los índices se llamarán:
+--
+
+
+ElasticAgent ---> ElasticSearch
+    Si logstash de por medio
+    
+Cualquier cambio en la policita de los índices me aplica a TODOS LOS AGENTES (5000 instalados)
+
+Para evitar eso, vamos a llevar esa gestión a ElasticSearch.
+
+
+    FileBeat ----> Kafka <----- Logstash ----> ES
+
+    Y me decían que por si acaso el día de mañana, cambiaba el ES, 
+    mejor llevar la configuración de la plantilla (ILM) al logstash.
+    
+    Logstash era la pieza central.
+    
+Ahora, para simplificar las instalaciones: dan el ElasticAgent.
+La filosofía orginal era: Tener agente MUY LIGEROS, que no hicieran PROCESAMIENTO DE DATOS 
+y delegar eso a un sistio centralizado: LOGSTASH
+
+Para todo lo que son herramientas estandar, los procesamientos los puedo tener montados a prioori...
+Los ofrece Elastic (módulos)
+
+Ahora me dan un agente PESADO (que incluye todos los agentes beats unificados + todos los modulos de integración con otras herramienast)
+Y esos agentes son los que hacen el preprocesamiento.
+
+De cara a su solución es mucho más efectivo:
+Te lo ofrezco a golpe de CLICK.
+
+Para mi (empresa), esto es un DESPARRAME DE RECURSOS.
+Necesito más RAM, CPU, ESPACIO DE ALMACENAMIENTO
+
+Por contra: me libero de tanta configuración.
+- A corto plazo es guay (para mi empresa, para mi elastic)
+- A medio largo plazo, la inversión de pasta en infra es gigante!
+
+Y esta política es la misma que os conté el otro día de la memoria de JAVA.
+Esto mismo es lo que ocurre hoy en día con los clouds...
+Me ofrecen una BBDD y ellos se comen la gestión/mnto.
+AZURE Cloud, dame una bbdd sqlserver... y tu la gestionas.
+Yo na no necesito un DBA.
+Eso si.. la BBDD no va ir finita como antes.. que mi DBA con experiencia me la dejaba DPM.
+Solución... más infra... Me sale más barato que el DBA? GUAY!
+
+    Fluentd ----> ES
+         v
+        Índice 
+        
+        Plantilla de INDICES
+         ^    
+        ILM
+
+
+---
+
+# Routing de indices
+
+Un índice puede tener muchos shards.
+El tema es que cuando hacemos una búsqueda hay que buscar en TODOS LOS SHARDS.. y juntar los datos de todos ellos.
+
+Hay ocasiones en las que me puede interesa que todos los documentos que comparten un CAMPO se
+guarden juntos en el mismo shard.
+
+INDICE DE PERSONAS
+
+
+Pantalla de búsqueda: DNI | NACIONALIDAD | NOMBRE ....
+
+Me podría interesar que todos las personas con la misma nacionalidad se guarden juntas.
+Me podría interesar que todos las personas cuyo DNI comience por un determinado dígito se guarden juntas.
+
+Al cargar un documento
+POST /indice/_doc/ID
+{
+    "campo1": "valor1",
+    "campo2": "valor2"
+}
+
+Por defecto, ElasticSearch lo que hace es un HASH numérico del ID.
+Ese hash, que es un número le aplica el operador MODULO (REMAINDER, RESTO DE LA DIVIION ENTERA) 
+sobre el numero de shards.
+
+    Si ese documento tiene por ID = AKSDKHJASDKLASD21987243879123
+    De ese ID se genera un hash numerico: 19278264871 
+    Se divide entre el número de shards... y se toma el resto: [0-(número de shards-1)]
+    Ese resto el el SHARD donde se guarda el documento.
+
+POST /indice/_doc/ID?routing=valor1
+{
+    "campo1": "valor1",
+    "campo2": "valor2"
+}
+Esto lo haría el mismo proceso que antes, pero no sobre el campo ID, sino sobre el ese dato que pongo para enrutar.
+
+De hecho esto se usa en colaboración con un mapping que defino en el índice:
+PUT /indice
+{
+    "mappings": {
+        "_routing" : {
+            "required": true
+        }
+    }
+}
+
+Al hacer las búsquedas
+GET /indice/_search?routing=valor1
+{
+    
+}
+
+Limito el número de shards (los shards concretos) sobre los que hago la búsqueda e incrementa DESPROCIONADAMENTE el rendimiento
+
+OJO: 
+- Me cargo (o me puedo cargar) el balanceo de carga: Podría ser que un shard se use mucho más que otros.
