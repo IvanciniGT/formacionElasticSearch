@@ -61,6 +61,7 @@ services:
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - 172.31.41.172\n"\
           "  - name: coordinador2\n"\
           "    dns:\n"\
           "      - coordinador2\n"\
@@ -272,7 +273,7 @@ services:
       - cluster.name=${CLUSTER_NAME}
       - discovery.seed_hosts=maestro1,maestro2
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - node.roles=data, ml            # NODO DE DATOS, en este caso del curso, le vamos también machine_learning
+      #- node.roles=data, ml            # NODO DE DATOS, en este caso del curso, le vamos también machine_learning
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -321,7 +322,7 @@ services:
       cluster.name: ${CLUSTER_NAME}
       discovery.seed_hosts: maestro1,maestro2
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
-      node.roles: "data,ml"            # NODO DE DATOS, en este caso del curso, le vamos también machine_learning
+      #node.roles: "data,ml"            # NODO DE DATOS, en este caso del curso, le vamos también machine_learning
       bootstrap.memory_lock: true
       xpack.security.enabled: true
       xpack.security.http.ssl.enabled: true
